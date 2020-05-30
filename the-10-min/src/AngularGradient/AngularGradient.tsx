@@ -7,7 +7,7 @@ import Svg, {
   G,
   LinearGradient,
   Path,
-  Stop
+  Stop,
 } from "react-native-svg";
 import Animated from "react-native-reanimated";
 import { StyleGuide } from "../components";
@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   svg: {
-    transform: [{ rotateZ: "-90deg" }]
-  }
+    transform: [{ rotateZ: "-90deg" }],
+  },
 });
 
 export default () => {
@@ -59,7 +59,7 @@ export default () => {
           {arcs.map((_d, key) => {
             const isReversed = key / sampling >= 0.5;
             return (
-              <LinearGradient id={`gradient-${key}`} {...{ key }}>
+              <LinearGradient key={key} id={`gradient-${key}`}>
                 <Stop
                   stopColor={palette(key / sampling)}
                   offset={`${isReversed ? 100 : 0}%`}
@@ -77,9 +77,10 @@ export default () => {
         >
           {arcs.map((d, key) => (
             <Path
+              key={key}
               fill="transparent"
               stroke={`url(#gradient-${key})`}
-              {...{ strokeWidth, d, key }}
+              {...{ strokeWidth, d }}
             />
           ))}
         </G>

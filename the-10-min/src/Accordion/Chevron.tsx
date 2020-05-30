@@ -1,8 +1,8 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, processColor } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import Animated from "react-native-reanimated";
-import { bInterpolate, bInterpolateColor } from "react-native-redash";
+import { mix, mixColor } from "react-native-redash";
 
 const size = 30;
 const styles = StyleSheet.create({
@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
     width: size,
     borderRadius: size / 2,
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 interface ChevronProps {
@@ -20,11 +20,11 @@ interface ChevronProps {
 }
 
 export default ({ transition }: ChevronProps) => {
-  const rotateZ = bInterpolate(transition, Math.PI, 0);
-  const backgroundColor = bInterpolateColor(
+  const rotateZ = mix(transition, Math.PI, 0);
+  const backgroundColor = mixColor(
     transition,
-    { r: 82, g: 82, b: 81 },
-    { r: 228, g: 86, b: 69 }
+    processColor("#525251"),
+    processColor("#e45645")
   ) as Animated.Node<number>;
   return (
     <Animated.View

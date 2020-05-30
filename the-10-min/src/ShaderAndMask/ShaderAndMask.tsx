@@ -7,13 +7,13 @@ import AngularGradient from "../components/AngularGradient";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000001"
+    backgroundColor: "#000001",
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 export default () => {
@@ -21,7 +21,7 @@ export default () => {
   return (
     <View style={styles.container}>
       {[R1, R2, R3].reverse().map((ring, key) => (
-        <View style={styles.overlay} {...{ key }}>
+        <View style={styles.overlay} key={key}>
           <AngularGradient size={ring.size} colors={[ring.start, ring.end]} />
         </View>
       ))}

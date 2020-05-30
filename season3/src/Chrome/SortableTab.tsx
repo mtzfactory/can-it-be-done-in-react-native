@@ -4,7 +4,7 @@ import { PanGestureHandler, State } from "react-native-gesture-handler";
 import {
   moving,
   panGestureHandler,
-  withSpringTransition
+  withSpringTransition,
 } from "react-native-redash";
 import Tab, { TAB_SIZE, TabProps } from "./Tab";
 
@@ -19,13 +19,13 @@ const {
   multiply,
   divide,
   and,
-  round
+  round,
 } = Animated;
 
 export const withOffset = ({
   offset,
   value,
-  state: gestureState
+  state: gestureState,
 }: {
   offset: Animated.Adaptable<number>;
   value: Animated.Value<number>;
@@ -45,34 +45,27 @@ interface SortableCardProps extends TabProps {
 }
 
 export default ({ tab, offsets, index }: SortableCardProps) => {
-  const {
-    gestureHandler,
-    state,
-    translationX,
-    velocityX,
-    translationY,
-    velocityY
-  } = panGestureHandler();
+  const { gestureHandler, state, translation, velocity } = panGestureHandler();
   const currentOffset = offsets[index];
   const x = withOffset({
-    value: translationX,
+    value: translation.x,
     offset: currentOffset.x,
-    state
+    state,
   });
   const y = withOffset({
-    value: translationY,
+    value: translation.y,
     offset: currentOffset.y,
-    state
+    state,
   });
   const zIndex = cond(eq(state, State.ACTIVE), 200, cond(moving(y), 100, 1));
   const offsetX = multiply(round(divide(x, TAB_SIZE)), TAB_SIZE);
   const offsetY = multiply(round(divide(y, TAB_SIZE)), TAB_SIZE);
-  const translateX = withSpringTransition(x, {}, velocityX, state);
-  const translateY = withSpringTransition(y, {}, velocityY, state);
+  const translateX = withSpringTransition(x, {}, velocity.x, state);
+  const translateY = withSpringTransition(y, {}, velocity.y, state);
   useCode(
     () =>
       block(
-        offsets.map(offset =>
+        offsets.map((offset) =>
           cond(
             and(
               eq(offsetX, offset.x),
@@ -83,7 +76,7 @@ export default ({ tab, offsets, index }: SortableCardProps) => {
               set(offset.x, currentOffset.x),
               set(offset.y, currentOffset.y),
               set(currentOffset.x, offsetX),
-              set(currentOffset.y, offsetY)
+              set(currentOffset.y, offsetY),
             ]
           )
         )
@@ -102,7 +95,7 @@ export default ({ tab, offsets, index }: SortableCardProps) => {
           justifyContent: "center",
           alignItems: "center",
           transform: [{ translateX }, { translateY }],
-          zIndex
+          zIndex,
         }}
       >
         <Tab {...{ tab }} />

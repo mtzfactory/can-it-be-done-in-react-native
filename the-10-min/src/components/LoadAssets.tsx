@@ -15,7 +15,7 @@ const usePromiseAll = (promises: Promise<void | void[]>[], cb: () => void) =>
 const useLoadAssets = (assets: number[], fonts: FontSource): boolean => {
   const [ready, setReady] = useState(false);
   usePromiseAll(
-    [Font.loadAsync(fonts), ...assets.map(asset => Asset.loadAsync(asset))],
+    [Font.loadAsync(fonts), ...assets.map((asset) => Asset.loadAsync(asset))],
     () => setReady(true)
   );
   return ready;
@@ -27,7 +27,7 @@ interface LoadAssetsProps {
   children: ReactElement | ReactElement[];
 }
 
-export default ({ assets, fonts, children }: LoadAssetsProps) => {
+export default ({ assets, fonts, children }: LoadAssetsProps): JSX.Element => {
   const ready = useLoadAssets(assets || [], fonts || {});
   if (!ready) {
     return <AppLoading />;

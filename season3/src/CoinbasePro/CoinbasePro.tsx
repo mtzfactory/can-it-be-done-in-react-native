@@ -6,7 +6,7 @@ import Animated, {
   diffClamp,
   eq,
   modulo,
-  sub
+  sub,
 } from "react-native-reanimated";
 import { onGestureEvent, useValues } from "react-native-redash";
 
@@ -23,8 +23,8 @@ const candles = data.slice(0, 20);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black"
-  }
+    backgroundColor: "black",
+  },
 });
 const getDomain = (rows: Candle[]): [number, number] => {
   const values = rows.map(({ high, low }) => [high, low]).flat();
@@ -32,11 +32,11 @@ const getDomain = (rows: Candle[]): [number, number] => {
 };
 const domain = getDomain(candles);
 export default () => {
-  const [x, y, state] = useValues([0, 0, State.UNDETERMINED], []);
+  const [x, y, state] = useValues([0, 0, State.UNDETERMINED]);
   const gestureHandler = onGestureEvent({
     x,
     y,
-    state
+    state,
   });
   const caliber = size / candles.length;
   const translateY = diffClamp(y, 0, size);
@@ -58,7 +58,7 @@ export default () => {
               style={{
                 transform: [{ translateY }],
                 opacity,
-                ...StyleSheet.absoluteFillObject
+                ...StyleSheet.absoluteFillObject,
               }}
             >
               <Line x={size} y={0} />
@@ -67,7 +67,7 @@ export default () => {
               style={{
                 transform: [{ translateX }],
                 opacity,
-                ...StyleSheet.absoluteFillObject
+                ...StyleSheet.absoluteFillObject,
               }}
             >
               <Line x={0} y={size} />

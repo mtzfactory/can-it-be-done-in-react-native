@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 
 import Animated from "react-native-reanimated";
-import { bInterpolate, useTransition } from "react-native-redash";
+import { mix, useTransition } from "react-native-redash";
 import Chevron from "./Chevron";
 import Item, { LIST_ITEM_HEIGHT, ListItem } from "./ListItem";
 
@@ -16,15 +16,15 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   title: {
     fontSize: 16,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   items: {
-    overflow: "hidden"
-  }
+    overflow: "hidden",
+  },
 });
 
 export interface List {
@@ -39,25 +39,21 @@ interface ListProps {
 export default ({ list }: ListProps) => {
   const [open, setOpen] = useState(false);
   const transition = useTransition(open);
-  const height = bInterpolate(
-    transition,
-    0,
-    LIST_ITEM_HEIGHT * list.items.length
-  );
+  const height = mix(transition, 0, LIST_ITEM_HEIGHT * list.items.length);
   const bottomRadius = interpolate(transition, {
     inputRange: [0, 16 / 400],
-    outputRange: [8, 0]
+    outputRange: [8, 0],
   });
   return (
     <>
-      <TouchableWithoutFeedback onPress={() => setOpen(prev => !prev)}>
+      <TouchableWithoutFeedback onPress={() => setOpen((prev) => !prev)}>
         <Animated.View
           style={[
             styles.container,
             {
               borderBottomLeftRadius: bottomRadius,
-              borderBottomRightRadius: bottomRadius
-            }
+              borderBottomRightRadius: bottomRadius,
+            },
           ]}
         >
           <Text style={styles.title}>Total Points</Text>
@@ -66,7 +62,11 @@ export default ({ list }: ListProps) => {
       </TouchableWithoutFeedback>
       <Animated.View style={[styles.items, { height }]}>
         {list.items.map((item, key) => (
-          <Item {...{ item, key }} isLast={key === list.items.length - 1} />
+          <Item
+            key={key}
+            isLast={key === list.items.length - 1}
+            {...{ item }}
+          />
         ))}
       </Animated.View>
     </>
