@@ -22,6 +22,8 @@ import Skew from "./src/Skew";
 import Transformation3D from "./src/Transformation3D";
 import Swiper, { assets as swiperAssets } from "./src/Swiper";
 import Wallet from "./src/Wallet";
+import Trigonometry from "./src/Trigonometry";
+import Ripple from "./src/Ripple";
 
 const assets: number[] = [
   ...examples.map((example) => example.source),
@@ -38,10 +40,10 @@ const fonts = {
 const AppNavigator = createAppContainer(
   createStackNavigator(
     {
-      Wallet: {
-        screen: Wallet,
+      Ripple: {
+        screen: Ripple,
         navigationOptions: {
-          title: "Wallet",
+          title: "Ripple Effect",
         },
       },
       Examples: {
@@ -137,6 +139,18 @@ const AppNavigator = createAppContainer(
           title: "Swiper",
         },
       },
+      Wallet: {
+        screen: Wallet,
+        navigationOptions: {
+          title: "Wallet",
+        },
+      },
+      Trigonometry: {
+        screen: Trigonometry,
+        navigationOptions: {
+          title: "Trigonometry",
+        },
+      },
     },
     {
       defaultNavigationOptions: {
@@ -146,6 +160,7 @@ const AppNavigator = createAppContainer(
         },
         headerTintColor: "white",
       },
+      initialRouteName: "Ripple",
     }
   )
 );
