@@ -1,20 +1,13 @@
 import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  Platform,
-  Alert,
-} from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import Animated, {
   useSharedValue,
-  useAnimatedStyle,
   runOnUI,
+  runOnJS,
 } from "react-native-reanimated";
+import { ReText } from "react-native-redash";
 
-import { Button, StyleGuide } from "../components";
-import ReText from "../components/ReText";
+import { Button } from "../components";
 
 const styles = StyleSheet.create({
   container: {
@@ -24,17 +17,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const formatDatetime = (datetime) => {
+const formatDatetime = (datetime: Date) => {
   "worklet";
   return `${datetime.getFullYear()}-${
     datetime.getMonth() + 1
   }-${datetime.getDate()} ${datetime.getHours()}:${datetime.getMinutes()}:${datetime.getSeconds()}`;
 };
 
-const sayHello = (text, from, cb) => {
+const sayHello = (
+  text: Animated.SharedValue<string>,
+  from: string,
+  cb: () => void
+) => {
   "worklet";
-  text.value = `Hello from ${Platform.OS} at ${formatDatetime(new Date())}`;
-  cb();
+  text.value = `Hello from ${from} at ${formatDatetime(new Date())}`;
+  runOnJS(cb)();
 };
 
 const Worklets = () => {

@@ -24,6 +24,8 @@ import Swiper, { assets as swiperAssets } from "./src/Swiper";
 import Wallet from "./src/Wallet";
 import Trigonometry from "./src/Trigonometry";
 import Ripple from "./src/Ripple";
+import Picker from "./src/Picker";
+import JellyScroll from "./src/JellyScroll";
 
 const assets: number[] = [
   ...examples.map((example) => example.source),
@@ -40,6 +42,12 @@ const fonts = {
 const AppNavigator = createAppContainer(
   createStackNavigator(
     {
+      JellyScroll: {
+        screen: JellyScroll,
+        navigationOptions: {
+          title: "Jelly Scroll",
+        },
+      },
       Ripple: {
         screen: Ripple,
         navigationOptions: {
@@ -151,6 +159,12 @@ const AppNavigator = createAppContainer(
           title: "Trigonometry",
         },
       },
+      Picker: {
+        screen: Picker,
+        navigationOptions: {
+          title: "Picker",
+        },
+      },
     },
     {
       defaultNavigationOptions: {
@@ -160,7 +174,7 @@ const AppNavigator = createAppContainer(
         },
         headerTintColor: "white",
       },
-      initialRouteName: "Ripple",
+      initialRouteName: "Examples",
     }
   )
 );
